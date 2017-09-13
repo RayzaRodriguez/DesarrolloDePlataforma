@@ -1,0 +1,26 @@
+.boton{
+	width:35px; 
+	height:35px;
+}
+
+#total{
+	width: 180px;
+	text-align: right;
+}
+
+#tabla1{
+	background-color: black;
+	border-color: yellow;
+}
+
+#tabla2{
+	margin: auto;
+}
+
+#td-cc{
+	text-align: center;
+}
+
+#cc{
+	width: 120px;
+}
