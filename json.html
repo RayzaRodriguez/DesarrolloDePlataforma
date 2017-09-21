@@ -1,0 +1,198 @@
+<html>
+ <head>
+  <script>
+var  pos = -1;
+var alumno = {
+ "nombre": "Juan",
+ "edad": 23,
+ "cursos": [
+   {
+     "codigo" : "CS-01",
+	 "nombre" : "Algoritmos"
+   },
+   {
+     "codigo" : "CS-02",
+	 "nombre" : "Base de Datos"
+   }
+ ],
+ "direccion" : {
+   "tipo" : "Calle",
+   "nombre" : "Los rosales 123"
+ }
+};
+
+function verDatos() {
+  var tbl = document.getElementById("tbl");
+  tbl.style.display = "table";
+
+  var nom = document.getElementById("nombre");
+  var edad = document.getElementById("edad");
+  nom.innerText = alumno.nombre;
+  edad.innerText = alumno.edad;
+  
+  listarCursos2();
+}
+
+function mostrarTabla(curso){
+     var tbl2 = document.getElementById("tbl2");
+     tbl2.style.display = "table";
+     var curso_nombre = document.getElementById("curso_nombre");
+     var codigo = document.getElementById("codigo");
+     for(var i=0; i<alumno.cursos.length;i++){
+          if(alumno.cursos[i].codigo==curso){
+               curso_nombre.value = alumno.cursos[i].nombre;
+               pos = i;
+               break;
+          }
+     }
+     codigo.value = curso;
+}
+function eliminarCurso(curso){
+     var po=0;
+     for(var j=0; j<alumno.cursos.length;i++){
+          if(alumno.cursos[j].codigo==curso){
+               po=j;
+               break;
+          }
+     }
+     alumno.cursos.splice(po,1);
+     listarCursos2();
+}
+
+function mostrarTabla3(){
+     var tbl3 = document.getElementById("tbl3");
+     tbl3.style.display = "table";
+     document.getElementById("curso_nombre2").value = "";
+     document.getElementById("codigo2").value = "";
+
+}
+
+function ocultarTabla2(){
+     var tbl2 = document.getElementById("tbl2");
+     tbl2.style.display = "none";
+}
+
+function ocultarTabla3(){
+     var tbl3 = document.getElementById("tbl3");
+     tbl3.style.display = "none";
+}
+
+function actualizarDatos(){
+     var curso_nombre = document.getElementById("curso_nombre");
+     var codigo = document.getElementById("codigo");
+
+     alumno.cursos[pos].nombre = curso_nombre.value;
+     alumno.cursos[pos].codigo = codigo.value;
+
+     listarCursos2();
+     ocultarTabla2();
+}
+
+function guardarDatos(){
+     var curso_nombre = document.getElementById("curso_nombre2");
+     var codigo = document.getElementById("codigo2");
+
+     var curso = {
+          "codigo": codigo.value,
+          "nombre": curso_nombre.value
+     };
+
+     alumno.cursos.push(curso);
+
+     ocultarTabla3();
+     listarCursos2();
+}
+
+
+
+function listarCursos1() {
+  var cursos = document.getElementById("cursos");
+  var ul = document.createElement("ul");
+  cursos.appendChild(ul);
+  for (var i=0; i<alumno.cursos.length; i++) {
+    var curso = alumno.cursos[i];
+    var li = document.createElement("li");
+	li.innerText = curso.nombre;
+	ul.appendChild(li);
+  }
+}
+
+function listarCursos2() {
+  var cursos = document.getElementById("cursos");
+  var strCursos = "<ul>";
+  for (var i=0; i<alumno.cursos.length; i++) 
+  {
+	var curso = alumno.cursos[i];
+    strCursos += "<li><span title='"+curso.codigo+"' onclick='mostrarTabla(this.title)'>" + curso.nombre + "</span> <button title='"+curso.codigo+"' onclick='eliminarCurso(this.title)' style='width:20px; height:20px; '>x</button></li>";
+  }
+  strCursos += "</ul>";
+  cursos.innerHTML = strCursos;
+}
+
+  </script>
+ </head>
+ <body bgcolor="brown">
+  <button onclick="verDatos()">Ver datos</button>
+  <table id="tbl" border="1" style="display: none; margin: 10px;">
+    <tr>
+	  <th>Nombre:</th>
+	  <td id="nombre"></td>
+	</tr>
+    <tr>
+	  <th>Edad:</th>
+	  <td id="edad"></td>
+	</tr>
+    <tr>
+	  <th>Cursos:</th>
+	  <td>
+		<table>
+			<tr>
+				<td id="cursos">
+				</td>
+			</tr>
+			<tr>
+				<td align="center">
+                         <button onclick="mostrarTabla3()"> Agregar </button>
+                    </td>
+			</tr>
+		</table>
+	  </td>
+	  
+	</tr>
+  </table>
+
+  <table id="tbl2" border="1" style="display: none;">
+       <tr>
+            <td>Nombre:</td>
+            <td><input id="curso_nombre" type="text" name=""/></td>
+       </tr>
+       <tr>
+            <td>Codigo:</td>
+            <td><input id="codigo" type="text" name=""/></td>
+       </tr>
+       <tr>
+            <td><button onclick="actualizarDatos()">Actualizar</button></td>
+            <td><button onclick="ocultarTabla2()">Cancelar</button></td>
+       </tr>
+
+
+  </table>
+
+  <table id="tbl3" border="1" style="display: none;">
+       <tr>
+            <td>Nombre:</td>
+            <td><input id="curso_nombre2" type="text" name=""/></td>
+       </tr>
+       <tr>
+            <td>Codigo:</td>
+            <td><input id="codigo2" type="text" name=""/></td>
+       </tr>
+       <tr>
+            <td><button onclick="guardarDatos()">Guardar</button></td>
+            <td><button onclick="ocultarTabla3()">Cancelar</button></td>
+       </tr>
+
+
+  </table>
+ </body>
+</html>
